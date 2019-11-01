@@ -33,7 +33,7 @@ public class BeerController {
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity saveNewBeer(@PathVariable("beerId") UUID id, @RequestBody BeerDto beer) {
+    public ResponseEntity update(@PathVariable("beerId") UUID id, @RequestBody BeerDto beer) {
         //TODO impl
         return new ResponseEntity<>(NO_CONTENT);
     }
