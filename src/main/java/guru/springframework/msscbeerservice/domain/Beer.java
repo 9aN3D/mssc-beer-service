@@ -47,9 +47,9 @@ public class Beer {
     @UpdateTimestamp
     private Timestamp lastModifiedTime;
 
-    private String beerName;
+    private String name;
 
-    private BeerStyle beerStyle;
+    private BeerStyle style;
 
     @Column(unique = true)
     private Long upc;

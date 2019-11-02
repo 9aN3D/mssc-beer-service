@@ -7,7 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 
 import static guru.springframework.msscbeerservice.web.model.BeerStyle.DUNKEL;
@@ -38,8 +37,8 @@ public class BeerLoader implements CommandLineRunner {
 
     private List<Beer> beers() {
         Beer beer1 = Beer.builder()
-                .beerName("Mango Bobs")
-                .beerStyle(DUNKEL)
+                .name("Mango Bobs")
+                .style(DUNKEL)
                 .minOnHand(5)
                 .quantityToBrew(200)
                 .price(new BigDecimal("9.78"))
@@ -47,8 +46,8 @@ public class BeerLoader implements CommandLineRunner {
                 .build();
 
         Beer beer2 = Beer.builder()
-                .beerName("Galaxy Cat")
-                .beerStyle(ALE)
+                .name("Galaxy Cat")
+                .style(ALE)
                 .minOnHand(12)
                 .quantityToBrew(100)
                 .price(new BigDecimal("12.95"))
@@ -56,8 +55,8 @@ public class BeerLoader implements CommandLineRunner {
                 .build();
 
         Beer beer3 = Beer.builder()
-                .beerName("Pinball Porter")
-                .beerStyle(PORTER)
+                .name("Pinball Porter")
+                .style(PORTER)
                 .minOnHand(8)
                 .quantityToBrew(240)
                 .price(new BigDecimal("10.95"))
