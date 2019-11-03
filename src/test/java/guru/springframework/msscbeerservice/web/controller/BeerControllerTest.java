@@ -84,15 +84,15 @@ class BeerControllerTest {
                                 parameterWithName("beerId").description("UUID of desired beer to get.")
                         ),
                         responseFields(
-                                fields.withPath("id").type(UUID.class).description("Id of beer"),
-                                fields.withPath("version").type(NUMBER).description("Version number"),
-                                fields.withPath("createTime").type(OffsetDateTime.class).description("Time created"),
-                                fields.withPath("lastModifiedTime").type(OffsetDateTime.class).description("Time updated"),
-                                fields.withPath("name").type(STRING).description("Beer name"),
-                                fields.withPath("style").type(STRING).description("Beer style"),
-                                fields.withPath("upc").type(NUMBER).description("UPC of beer"),
-                                fields.withPath("price").type(NUMBER).description("Price"),
-                                fields.withPath("quantityOnHand").type(NUMBER).description("Quantity on hand")
+                                fields.withPath("id").description("Id of beer"),
+                                fields.withPath("version").description("Version number"),
+                                fields.withPath("createTime").description("Time created"),
+                                fields.withPath("lastModifiedTime").description("Time updated"),
+                                fields.withPath("name").description("Beer name"),
+                                fields.withPath("style").description("Beer style"),
+                                fields.withPath("upc").description("UPC of beer"),
+                                fields.withPath("price").description("Price"),
+                                fields.withPath("quantityOnHand").description("Quantity on hand")
                         )));
     }
 
