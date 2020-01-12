@@ -1,8 +1,7 @@
 package guru.springframework.msscbeerservice.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import guru.springframework.msscbeerservice.domain.Beer;
-import guru.springframework.msscbeerservice.repository.BeerRepository;
+import guru.springframework.msscbeerservice.service.BeerService;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 import java.util.UUID;
 
 import static guru.springframework.msscbeerservice.web.model.BeerStyle.PILSNER;
@@ -51,7 +49,7 @@ class BeerControllerTest {
     ObjectMapper mapper;
 
     @MockBean
-    BeerRepository repository;
+    BeerService beerService;
 
     private BeerDto validBeer;
 
@@ -67,7 +65,7 @@ class BeerControllerTest {
 
     @Test
     void getById() throws Exception {
-        given(repository.findById(any())).willReturn(Optional.of(Beer.builder().build()));
+        given(beerService.getById(any())).willReturn(BeerDto.builder().build());
 
         ConstrainedFields fields = new ConstrainedFields(BeerDto.class);
 
@@ -119,7 +117,7 @@ class BeerControllerTest {
 
     @Test
     void update() throws Exception {
-        given(repository.findById(any())).willReturn(Optional.of(Beer.builder().build()));
+        given(beerService.getById(any())).willReturn(BeerDto.builder().build());
         String beerJson = mapper.writeValueAsString(validBeer);
 
         mockMvc.perform(
