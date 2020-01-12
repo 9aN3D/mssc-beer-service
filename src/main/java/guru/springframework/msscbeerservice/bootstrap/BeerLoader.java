@@ -18,9 +18,9 @@ import static java.util.Arrays.asList;
 @RequiredArgsConstructor
 public class BeerLoader implements CommandLineRunner {
 
-    private static final Long BEER_1_UPC = 163123420003L;
-    private static final Long BEER_2_UPC = 163123430001L;
-    private static final Long BEER_3_UPC = 108378337521L;
+    private static final String BEER_1_UPC = "0631234200036";
+    private static final String BEER_2_UPC = "0631234300019";
+    private static final String BEER_3_UPC = "0083783375213";
 
     private final BeerRepository beerRepository;
 

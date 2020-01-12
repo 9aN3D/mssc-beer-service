@@ -16,7 +16,7 @@ public class BaseTest {
                 .createTime(OffsetDateTime.now())
                 .lastModifiedTime(OffsetDateTime.now())
                 .price(new BigDecimal("4.33"))
-                .upc(123123123123L)
+                .upc("0631234200036")
                 .build();
     }
 

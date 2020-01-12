@@ -21,7 +21,6 @@ import static guru.springframework.msscbeerservice.web.model.BeerStyle.PILSNER;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -86,7 +85,7 @@ public class RepositoryBeerServiceTest {
                 .name("Test service beer")
                 .style(PILSNER)
                 .price(new BigDecimal("3.56"))
-                .upc(123123123123L)
+                .upc("0631234200036")
                 .build();
     }
 
