@@ -2,7 +2,10 @@ package guru.springframework.msscbeerservice.web.controller;
 
 import guru.springframework.msscbeerservice.service.BeerService;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
+import guru.springframework.msscbeerservice.web.model.BeerPagedList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +27,7 @@ import static org.springframework.http.HttpStatus.OK;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/beer")
+@RequestMapping("/api/v1/beers")
 public class BeerController {
 
     private final BeerService beerService;
@@ -44,6 +47,12 @@ public class BeerController {
     @GetMapping("/{beerId}")
     public ResponseEntity<BeerDto> getById(@NotNull @PathVariable("beerId") UUID id) {
         return new ResponseEntity<>(beerService.getById(id), OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<BeerPagedList> find(Pageable pageable) {
+        Page<BeerDto> page = beerService.find(pageable);
+        return new ResponseEntity<>(new BeerPagedList(page.getContent(), pageable, page.getTotalElements()), OK);
     }
 
 }

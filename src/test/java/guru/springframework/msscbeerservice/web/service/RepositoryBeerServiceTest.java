@@ -13,8 +13,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 import static guru.springframework.msscbeerservice.web.model.BeerStyle.PILSNER;
@@ -45,7 +50,7 @@ public class RepositoryBeerServiceTest {
 
     private Beer beer;
 
-    private UUID BEER_ID = UUID.fromString("aa89a818-5494-4592-8edf-7c3c629eb43e");
+    private final UUID BEER_ID = UUID.fromString("aa89a818-5494-4592-8edf-7c3c629eb43e");
 
     @BeforeEach
     void setUp() {
@@ -55,7 +60,7 @@ public class RepositoryBeerServiceTest {
     }
 
     @Test
-    void shouldGetBeerByIdWhenIsCorrect() {
+    void shouldGetBeerByIdWhenIdIsCorrect() {
         when(repository.findById(any(UUID.class))).thenReturn(of(beer));
 
         BeerDto beerDtoReturned = beerService.getById(BEER_ID);
@@ -68,6 +73,21 @@ public class RepositoryBeerServiceTest {
         assertNotNull("Null beer dto returned", beerDtoReturned);
 
         verify(repository, times(1)).findById(any(UUID.class));
+        verify(repository, never()).findAll();
+    }
+
+    @Test
+    void shouldGetBeers() {
+        List<Beer> beers = List.of(beer);
+        when(repository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(beers));
+
+        Page<BeerDto> pageReturned = beerService.find(PageRequest.of(0, 1));
+
+        assertEquals(pageReturned.getTotalElements(), beers.size());
+        assertEquals(pageReturned.getContent().get(0).getId(), beer.getId());
+        assertNotNull("Null page returned", pageReturned);
+
+        verify(repository, times(1)).findAll(any(Pageable.class));
         verify(repository, never()).findAll();
     }
 

@@ -3,6 +3,7 @@ package guru.springframework.msscbeerservice.web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import guru.springframework.msscbeerservice.service.BeerService;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
+import guru.springframework.msscbeerservice.web.model.BeerPagedList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import static guru.springframework.msscbeerservice.web.model.BeerStyle.PILSNER;
@@ -70,7 +72,7 @@ class BeerControllerTest {
         ConstrainedFields fields = new ConstrainedFields(BeerDto.class);
 
         mockMvc.perform(
-                get("/api/v1/beer/{beerId}", UUID.randomUUID().toString())
+                get("/api/v1/beers/{beerId}", UUID.randomUUID().toString())
                         .accept(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("v1/beer-get",
@@ -97,7 +99,7 @@ class BeerControllerTest {
         ConstrainedFields fields = new ConstrainedFields(BeerDto.class);
 
         mockMvc.perform(
-                post("/api/v1/beer/")
+                post("/api/v1/beers/")
                         .contentType(APPLICATION_JSON)
                         .content(beerJson))
                 .andExpect(status().isCreated())
@@ -121,10 +123,20 @@ class BeerControllerTest {
         String beerJson = mapper.writeValueAsString(validBeer);
 
         mockMvc.perform(
-                put("/api/v1/beer/{beerId}", UUID.randomUUID().toString())
+                put("/api/v1/beers/{beerId}", UUID.randomUUID().toString())
                         .contentType(APPLICATION_JSON)
                         .content(beerJson))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void find() throws Exception {
+        given(beerService.find(any())).willReturn(new BeerPagedList(new ArrayList<>()));
+
+        mockMvc.perform(
+                        get("/api/v1/beers")
+                                .accept(APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     private static class ConstrainedFields {
