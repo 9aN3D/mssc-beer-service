@@ -80,7 +80,7 @@ class BeerControllerTest {
                         responseFields(
                                 fields.withPath("id").description("Id of beer"),
                                 fields.withPath("version").description("Version number"),
-                                fields.withPath("createTime").description("Time created"),
+                                fields.withPath("createdTime").description("Time created"),
                                 fields.withPath("lastModifiedTime").description("Time updated"),
                                 fields.withPath("name").description("Beer name"),
                                 fields.withPath("style").description("Beer style"),
@@ -105,7 +105,7 @@ class BeerControllerTest {
                         requestFields(
                                 fields.withPath("id").ignored(),
                                 fields.withPath("version").ignored(),
-                                fields.withPath("createTime").ignored(),
+                                fields.withPath("createdTime").ignored(),
                                 fields.withPath("lastModifiedTime").ignored(),
                                 fields.withPath("name").description("Beer name"),
                                 fields.withPath("style").description("Beer style"),

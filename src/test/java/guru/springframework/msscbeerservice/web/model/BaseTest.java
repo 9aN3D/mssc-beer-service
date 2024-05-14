@@ -13,7 +13,7 @@ public class BaseTest {
                 .id(UUID.randomUUID())
                 .name("Beer name")
                 .style(ALE)
-                .createTime(OffsetDateTime.now())
+                .createdTime(OffsetDateTime.now())
                 .lastModifiedTime(OffsetDateTime.now())
                 .price(new BigDecimal("4.33"))
                 .upc("0631234200036")
