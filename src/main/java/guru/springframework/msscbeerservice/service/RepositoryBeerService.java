@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
 
 import static java.lang.String.format;
 import static java.util.Objects.nonNull;
@@ -50,9 +51,9 @@ public class RepositoryBeerService implements BeerService {
     }
 
     @Override
-    public BeerDto getById(UUID id) {
-        log.trace("Getting beer {id: {}}", id);
-        BeerDto beerDto = mapper.beerToBeerDto(getByIdOrThrow(id));
+    public BeerDto getById(UUID id, boolean showInventoryOnHand) {
+        log.trace("Getting beer {id: {}, showInventoryOnHand: {}}", id, showInventoryOnHand);
+        BeerDto beerDto = getBeerToBeerDtoFunction(showInventoryOnHand).apply(getByIdOrThrow(id));
         log.info("Got beer {dto: {}}", beerDto);
         return beerDto;
     }
@@ -70,7 +71,7 @@ public class RepositoryBeerService implements BeerService {
 
         Page<BeerDto> result = specification.map(spec -> repository.findAll(spec, pageable))
                 .orElseGet(() -> repository.findAll(pageable))
-                .map(mapper::beerToBeerDto);
+                .map(getBeerToBeerDtoFunction(searchRequest.isShowInventoryOnHand()));
 
         log.info("Searched beers {searchRequest: {}, pageable: {}, pageTotalElements: {}, pageNumberOfElements: {}}", searchRequest, pageable, result.getTotalElements(), result.getNumberOfElements());
         return result;
@@ -90,6 +91,12 @@ public class RepositoryBeerService implements BeerService {
     private Beer getByIdOrThrow(UUID id) {
         return repository.findById(id)
                 .orElseThrow(() -> new BeerNotFoundException(format("Beer not found id %s", id.toString())));
+    }
+
+    private Function<Beer, BeerDto> getBeerToBeerDtoFunction(boolean showInventoryOnHand) {
+        return showInventoryOnHand
+                ? mapper::beerToBeerDto
+                : mapper::beerToBeerDtoWithoutQuantityOnHand;
     }
 
 }

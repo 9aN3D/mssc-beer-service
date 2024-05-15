@@ -13,7 +13,7 @@ public interface BeerService {
 
     void update(UUID id, BeerDto dto);
 
-    BeerDto getById(UUID id);
+    BeerDto getById(UUID id, boolean showInventoryOnHand);
 
     Page<BeerDto> find(BeerSearchRequest searchRequest, Pageable pageable);
 

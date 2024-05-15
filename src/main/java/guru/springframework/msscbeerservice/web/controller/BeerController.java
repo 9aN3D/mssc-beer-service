@@ -4,6 +4,7 @@ import guru.springframework.msscbeerservice.service.BeerService;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
 import guru.springframework.msscbeerservice.web.model.BeerPagedList;
 import guru.springframework.msscbeerservice.web.model.BeerSearchRequest;
+import guru.springframework.msscbeerservice.web.model.BeerStyle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -47,12 +49,21 @@ public class BeerController {
     }
 
     @GetMapping("/{beerId}")
-    public ResponseEntity<BeerDto> getById(@NotNull @PathVariable("beerId") UUID id) {
-        return new ResponseEntity<>(beerService.getById(id), OK);
+    public ResponseEntity<BeerDto> getById(@NotNull @PathVariable("beerId") UUID id,
+                                           @RequestParam(name = "showInventoryOnHand", required = false, defaultValue = "false") Boolean showInventoryOnHand) {
+        return new ResponseEntity<>(beerService.getById(id, showInventoryOnHand), OK);
     }
 
     @GetMapping
-    public ResponseEntity<BeerPagedList> find(BeerSearchRequest searchRequest, Pageable pageable) {
+    public ResponseEntity<BeerPagedList> find(@RequestParam(name = "name", required = false) String name,
+                                              @RequestParam(name = "style", required = false) BeerStyle style,
+                                              @RequestParam(name = "showInventoryOnHand", required = false, defaultValue = "false") Boolean showInventoryOnHand,
+                                              Pageable pageable) {
+        BeerSearchRequest searchRequest = BeerSearchRequest.builder()
+                .name(name)
+                .style(style)
+                .showInventoryOnHand(showInventoryOnHand)
+                .build();
         Page<BeerDto> page = beerService.find(searchRequest, pageable);
         return new ResponseEntity<>(new BeerPagedList(page.getContent(), pageable, page.getTotalElements()), OK);
     }
