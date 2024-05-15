@@ -6,13 +6,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 import static java.lang.Boolean.TRUE;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BeerSearchRequest {
+public class BeerSearchRequest implements Serializable {
+
+    private static final long serialVersionUID = -5467535489600090814L;
 
     private String name;
 

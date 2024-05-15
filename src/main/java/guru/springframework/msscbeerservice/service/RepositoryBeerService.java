@@ -8,6 +8,7 @@ import guru.springframework.msscbeerservice.web.model.BeerDto;
 import guru.springframework.msscbeerservice.web.model.BeerSearchRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,13 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
 import static java.lang.String.format;
-import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 
 @Slf4j
@@ -50,6 +49,7 @@ public class RepositoryBeerService implements BeerService {
         log.info("Updated beer: {}", beer);
     }
 
+    @Cacheable(cacheNames = "beerCache", key = "#id", condition = "#showInventoryOnHand == false")
     @Override
     public BeerDto getById(UUID id, boolean showInventoryOnHand) {
         log.trace("Getting beer {id: {}, showInventoryOnHand: {}}", id, showInventoryOnHand);
@@ -58,6 +58,7 @@ public class RepositoryBeerService implements BeerService {
         return beerDto;
     }
 
+    @Cacheable(cacheNames = "beerListCache", condition = "#searchRequest.showInventoryOnHand == false")
     @Override
     public Page<BeerDto> find(BeerSearchRequest searchRequest, Pageable pageable) {
         log.trace("Searching beers {searchRequest: {}, pageable: {}}", searchRequest, pageable);
@@ -90,7 +91,7 @@ public class RepositoryBeerService implements BeerService {
 
     private Beer getByIdOrThrow(UUID id) {
         return repository.findById(id)
-                .orElseThrow(() -> new BeerNotFoundException(format("Beer not found id %s", id.toString())));
+                .orElseThrow(() -> new BeerNotFoundException(format("Beer not found id %s", id)));
     }
 
     private Function<Beer, BeerDto> getBeerToBeerDtoFunction(boolean showInventoryOnHand) {

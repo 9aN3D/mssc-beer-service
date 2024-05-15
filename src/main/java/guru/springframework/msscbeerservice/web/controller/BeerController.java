@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -37,15 +38,15 @@ public class BeerController {
     private final BeerService beerService;
 
     @PostMapping
-    public ResponseEntity save(@Valid @NotNull @RequestBody BeerDto dto) {
+    @ResponseStatus(CREATED)
+    public void save(@Valid @NotNull @RequestBody BeerDto dto) {
         beerService.save(dto);
-        return new ResponseEntity<>(CREATED);
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity update(@NotNull @PathVariable("beerId") UUID id, @Valid @NotNull @RequestBody BeerDto dto) {
+    @ResponseStatus(NO_CONTENT)
+    public void update(@NotNull @PathVariable("beerId") UUID id, @Valid @NotNull @RequestBody BeerDto dto) {
         beerService.update(id, dto);
-        return new ResponseEntity<>(NO_CONTENT);
     }
 
     @GetMapping("/{beerId}")
