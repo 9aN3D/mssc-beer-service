@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -132,7 +133,7 @@ public class RepositoryBeerServiceTest {
     @Test
     void shouldGetBeersWhenSearchRequestHasName() {
         List<Beer> beers = List.of(beer);
-        when(repository.findAll(any(), any(Pageable.class))).thenReturn(new PageImpl<>(beers));
+        when(repository.findAll(any(Specification.class), any(Pageable.class))).thenReturn(new PageImpl<>(beers));
 
         Page<BeerDto> pageReturned = beerService.find(BeerSearchRequest.builder().name(beer.getName()).build(), PageRequest.of(0, 1));
 
@@ -141,7 +142,7 @@ public class RepositoryBeerServiceTest {
         assertEquals(pageReturned.getContent().get(0).getId(), beer.getId());
         assertNull(pageReturned.getContent().get(0).getQuantityOnHand());
 
-        verify(repository, times(1)).findAll(any(), any(Pageable.class));
+        verify(repository, times(1)).findAll(any(Specification.class), any(Pageable.class));
         verify(repository, never()).findAll();
         verify(beerInventoryService, never()).getOnHandInventory(any(UUID.class));
     }
@@ -149,7 +150,7 @@ public class RepositoryBeerServiceTest {
     @Test
     void shouldGetBeersWhenSearchRequestHasStyle() {
         List<Beer> beers = List.of(beer);
-        when(repository.findAll(any(), any(Pageable.class))).thenReturn(new PageImpl<>(beers));
+        when(repository.findAll(any(Specification.class), any(Pageable.class))).thenReturn(new PageImpl<>(beers));
 
         Page<BeerDto> pageReturned = beerService.find(BeerSearchRequest.builder().style(beer.getStyle()).build(), PageRequest.of(0, 1));
 
@@ -158,7 +159,7 @@ public class RepositoryBeerServiceTest {
         assertEquals(pageReturned.getContent().get(0).getId(), beer.getId());
         assertNull(pageReturned.getContent().get(0).getQuantityOnHand());
 
-        verify(repository, times(1)).findAll(any(), any(Pageable.class));
+        verify(repository, times(1)).findAll(any(Specification.class), any(Pageable.class));
         verify(repository, never()).findAll();
         verify(beerInventoryService, never()).getOnHandInventory(any(UUID.class));
     }
