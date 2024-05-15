@@ -60,6 +60,7 @@ public class RepositoryBeerServiceTest {
     private Beer beer;
 
     private final UUID BEER_ID = UUID.fromString("aa89a818-5494-4592-8edf-7c3c629eb43e");
+    private final String BEER_UPC = "0631234200036";
     private final Integer QUANTITY_ON_HAND = 10;
 
     @BeforeEach
@@ -188,13 +189,40 @@ public class RepositoryBeerServiceTest {
                 beerService.getById(UUID.fromString("11111111-5494-4592-8edf-7c3c629eb43e"), false));
     }
 
+    @Test
+    void shouldThrowBeerNotFoundExceptionWhenUpcIsNotCorrect() {
+        when(repository.findFirstByUpc(any(String.class))).thenReturn(empty());
+
+        assertThrows(BeerNotFoundException.class, () -> beerService.getByUpc(""));
+    }
+
+    @Test
+    void shouldGetBeerByUpcWhenIdIsCorrect() {
+        when(repository.findFirstByUpc(any(String.class))).thenReturn(of(beer));
+
+        BeerDto beerDtoReturned = beerService.getByUpc(BEER_UPC);
+
+        assertNotNull("Null beer dto returned", beerDtoReturned);
+        assertEquals(beerDtoReturned.getId(), beer.getId());
+        assertEquals(beerDtoReturned.getName(), beer.getName());
+        assertEquals(beerDtoReturned.getStyle(), beer.getStyle());
+        assertEquals(beerDtoReturned.getPrice(), beer.getPrice());
+        assertEquals(beerDtoReturned.getUpc(), beer.getUpc());
+        assertNull(beerDtoReturned.getQuantityOnHand());
+
+        verify(repository, times(1)).findFirstByUpc(any(String.class));
+        verify(repository, never()).findById(any(UUID.class));
+        verify(repository, never()).findAll();
+        verify(beerInventoryService, never()).getOnHandInventory(any(UUID.class));
+    }
+
     private Beer buildBeer() {
         return Beer.builder()
                 .id(BEER_ID)
                 .name("Test service beer")
                 .style(PILSNER)
                 .price(new BigDecimal("3.56"))
-                .upc("0631234200036")
+                .upc(BEER_UPC)
                 .build();
     }
 

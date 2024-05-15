@@ -98,6 +98,33 @@ class BeerControllerTest {
     }
 
     @Test
+    void getByUpc() throws Exception {
+        given(beerService.getByUpc(any())).willReturn(BeerDto.builder().build());
+
+        ConstrainedFields fields = new ConstrainedFields(BeerDto.class);
+
+        mockMvc.perform(
+                        get("/api/v1/beers/upc/{upc}", validBeer.getUpc())
+                                .accept(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("v1/beer-upc-get",
+                        pathParameters(
+                                parameterWithName("upc").description("UPC of desired beer to get.")
+                        ),
+                        responseFields(
+                                fields.withPath("id").description("Id of beer"),
+                                fields.withPath("version").description("Version number"),
+                                fields.withPath("createdTime").description("Time created"),
+                                fields.withPath("lastModifiedTime").description("Time updated"),
+                                fields.withPath("name").description("Beer name"),
+                                fields.withPath("style").description("Beer style"),
+                                fields.withPath("upc").description("UPC of beer"),
+                                fields.withPath("price").description("Price"),
+                                fields.withPath("quantityOnHand").description("Quantity on hand")
+                        )));
+    }
+
+    @Test
     void save() throws Exception {
         String beerJson = mapper.writeValueAsString(validBeer);
 

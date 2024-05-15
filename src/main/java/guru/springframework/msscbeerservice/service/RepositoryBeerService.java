@@ -58,6 +58,19 @@ public class RepositoryBeerService implements BeerService {
         return beerDto;
     }
 
+    @Cacheable(cacheNames = "beerUpcCache", key = "#upc")
+    @Override
+    public BeerDto getByUpc(String upc) {
+        log.trace("Getting beer {upc: {}}", upc);
+
+        BeerDto result = repository.findFirstByUpc(upc)
+                .map(mapper::beerToBeerDtoWithoutQuantityOnHand)
+                .orElseThrow(() -> new BeerNotFoundException(format("Beer not found by upc %s", upc)));
+
+        log.trace("Got beer {upc: {}, result: {}}", upc, result);
+        return result;
+    }
+
     @Cacheable(cacheNames = "beerListCache", condition = "#searchRequest.showInventoryOnHand == false")
     @Override
     public Page<BeerDto> find(BeerSearchRequest searchRequest, Pageable pageable) {
@@ -66,6 +79,7 @@ public class RepositoryBeerService implements BeerService {
         List<Specification<Beer>> specs = new LinkedList<>();
         ofNullable(searchRequest.getName()).map(BeerRepository.Specs::byName).ifPresent(specs::add);
         ofNullable(searchRequest.getStyle()).map(BeerRepository.Specs::byStyle).ifPresent(specs::add);
+        ofNullable(searchRequest.getUpc()).map(BeerRepository.Specs::byUpc).ifPresent(specs::add);
 
         Optional<Specification<Beer>> specification = specs.stream()
                 .reduce(Specification::and);

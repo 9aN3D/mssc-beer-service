@@ -15,6 +15,8 @@ public interface BeerService {
 
     BeerDto getById(UUID id, boolean showInventoryOnHand);
 
+    BeerDto getByUpc(String upc);
+
     Page<BeerDto> find(BeerSearchRequest searchRequest, Pageable pageable);
 
 }

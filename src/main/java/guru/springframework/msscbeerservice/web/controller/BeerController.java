@@ -55,14 +55,21 @@ public class BeerController {
         return new ResponseEntity<>(beerService.getById(id, showInventoryOnHand), OK);
     }
 
+    @GetMapping("/upc/{upc}")
+    public ResponseEntity<BeerDto> getById(@NotNull @PathVariable("upc") String upc) {
+        return new ResponseEntity<>(beerService.getByUpc(upc), OK);
+    }
+
     @GetMapping
     public ResponseEntity<BeerPagedList> find(@RequestParam(name = "name", required = false) String name,
                                               @RequestParam(name = "style", required = false) BeerStyle style,
+                                              @RequestParam(name = "upc", required = false) String upc,
                                               @RequestParam(name = "showInventoryOnHand", required = false, defaultValue = "false") Boolean showInventoryOnHand,
                                               Pageable pageable) {
         BeerSearchRequest searchRequest = BeerSearchRequest.builder()
                 .name(name)
                 .style(style)
+                .upc(upc)
                 .showInventoryOnHand(showInventoryOnHand)
                 .build();
         Page<BeerDto> page = beerService.find(searchRequest, pageable);

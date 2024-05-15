@@ -22,6 +22,8 @@ public class BeerSearchRequest implements Serializable {
 
     private BeerStyle style;
 
+    private String upc;
+
     private Boolean showInventoryOnHand;
 
     @JsonIgnore
