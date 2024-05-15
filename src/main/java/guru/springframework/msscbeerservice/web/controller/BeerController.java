@@ -3,9 +3,11 @@ package guru.springframework.msscbeerservice.web.controller;
 import guru.springframework.msscbeerservice.service.BeerService;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
 import guru.springframework.msscbeerservice.web.model.BeerPagedList;
+import guru.springframework.msscbeerservice.web.model.BeerSearchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,8 +52,8 @@ public class BeerController {
     }
 
     @GetMapping
-    public ResponseEntity<BeerPagedList> find(Pageable pageable) {
-        Page<BeerDto> page = beerService.find(pageable);
+    public ResponseEntity<BeerPagedList> find(BeerSearchRequest searchRequest, Pageable pageable) {
+        Page<BeerDto> page = beerService.find(searchRequest, pageable);
         return new ResponseEntity<>(new BeerPagedList(page.getContent(), pageable, page.getTotalElements()), OK);
     }
 

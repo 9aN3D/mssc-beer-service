@@ -1,6 +1,7 @@
 package guru.springframework.msscbeerservice.service;
 
 import guru.springframework.msscbeerservice.web.model.BeerDto;
+import guru.springframework.msscbeerservice.web.model.BeerSearchRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,6 +15,6 @@ public interface BeerService {
 
     BeerDto getById(UUID id);
 
-    Page<BeerDto> find(Pageable pageable);
+    Page<BeerDto> find(BeerSearchRequest searchRequest, Pageable pageable);
 
 }

@@ -40,7 +40,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(BeerController.class)
 @ExtendWith(RestDocumentationExtension.class)
-@ComponentScan(basePackages = "guru.springframework.msscbeerservice.web.mapper")
 @AutoConfigureRestDocs(uriScheme = "https", uriHost = "dev.springframework.guru", uriPort = 80)
 class BeerControllerTest {
 
@@ -131,7 +130,7 @@ class BeerControllerTest {
 
     @Test
     void find() throws Exception {
-        given(beerService.find(any())).willReturn(new BeerPagedList(new ArrayList<>()));
+        given(beerService.find(any(), any())).willReturn(new BeerPagedList(new ArrayList<>()));
 
         mockMvc.perform(
                         get("/api/v1/beers")

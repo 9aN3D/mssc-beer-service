@@ -5,16 +5,24 @@ import guru.springframework.msscbeerservice.exception.BeerNotFoundException;
 import guru.springframework.msscbeerservice.repository.BeerRepository;
 import guru.springframework.msscbeerservice.web.mapper.BeerMapper;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
+import guru.springframework.msscbeerservice.web.model.BeerSearchRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 import static java.lang.String.format;
+import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
 
 @Slf4j
 @Service
@@ -50,13 +58,21 @@ public class RepositoryBeerService implements BeerService {
     }
 
     @Override
-    public Page<BeerDto> find(Pageable pageable) {
-        log.trace("Searching beers {pageable: {}}", pageable);
+    public Page<BeerDto> find(BeerSearchRequest searchRequest, Pageable pageable) {
+        log.trace("Searching beers {searchRequest: {}, pageable: {}}", searchRequest, pageable);
 
-        Page<BeerDto> result = repository.findAll(pageable)
+        List<Specification<Beer>> specs = new LinkedList<>();
+        ofNullable(searchRequest.getName()).map(BeerRepository.Specs::byName).ifPresent(specs::add);
+        ofNullable(searchRequest.getStyle()).map(BeerRepository.Specs::byStyle).ifPresent(specs::add);
+
+        Optional<Specification<Beer>> specification = specs.stream()
+                .reduce(Specification::and);
+
+        Page<BeerDto> result = specification.map(spec -> repository.findAll(spec, pageable))
+                .orElseGet(() -> repository.findAll(pageable))
                 .map(mapper::beerToBeerDto);
 
-        log.info("Searched beers {pageable: {}, pageTotalElements: {}, pageNumberOfElements: {}}", pageable, result.getTotalElements(), result.getNumberOfElements());
+        log.info("Searched beers {searchRequest: {}, pageable: {}, pageTotalElements: {}, pageNumberOfElements: {}}", searchRequest, pageable, result.getTotalElements(), result.getNumberOfElements());
         return result;
     }
 
