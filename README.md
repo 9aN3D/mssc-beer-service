@@ -10,4 +10,4 @@ Spring Boot Microservice example
 | [Brewery Beer Order Service](https://github.com/9aN3D/mssc-beer-order-service) | 8081 |
 | [Brewery Beer Inventory Service](https://github.com/9aN3D/mssc-beer-inventory-service) | 8082 |
 
-# Open API - [swagger-ui](http://localhost:8081/swagger-ui/index.html)
+# Open API - [swagger-ui](http://localhost:8080/swagger-ui/index.html)
