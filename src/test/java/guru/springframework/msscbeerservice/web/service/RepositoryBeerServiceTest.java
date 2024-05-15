@@ -28,7 +28,6 @@ import java.util.UUID;
 import static guru.springframework.msscbeerservice.web.model.BeerStyle.PILSNER;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -37,6 +36,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.util.AssertionErrors.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
 public class RepositoryBeerServiceTest {
