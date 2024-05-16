@@ -1,4 +1,4 @@
-package guru.springframework.msscbeerservice.event.producer;
+package guru.springframework.msscbeerservice.events.producers;
 
 import guru.springframework.msscbeerservice.events.BeerEvent;
 import lombok.RequiredArgsConstructor;

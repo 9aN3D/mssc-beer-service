@@ -2,7 +2,7 @@ package guru.springframework.msscbeerservice.service;
 
 import guru.springframework.msscbeerservice.configuration.JmsConfiguration;
 import guru.springframework.msscbeerservice.domain.Beer;
-import guru.springframework.msscbeerservice.event.producer.EventProducer;
+import guru.springframework.msscbeerservice.events.producers.EventProducer;
 import guru.springframework.msscbeerservice.events.BrewBeerEvent;
 import guru.springframework.msscbeerservice.repository.BeerRepository;
 import guru.springframework.msscbeerservice.service.inventory.BeerInventoryService;
@@ -33,7 +33,7 @@ public class BrewingService {
             Integer onHandInventory = beerInventoryService.getOnHandInventory(beer.getId());
 
             if (beer.getMinOnHand() >= onHandInventory) {
-                eventProducer.produce(JmsConfiguration.BREWING_REQUEST_QUEUE, new BrewBeerEvent(beerMapper.beerToBeerDtoWithoutQuantityOnHand(beer)));
+                eventProducer.produceToBrewingRequestQueue(new BrewBeerEvent(beerMapper.beerToBeerDtoWithoutQuantityOnHand(beer)));
             }
         }
         log.info("Ended check for low inventory");
