@@ -2,7 +2,7 @@ package guru.springframework.mssc.beer.service.repository;
 
 import guru.springframework.mssc.beer.service.domain.Beer;
 import guru.springframework.mssc.beer.service.domain.Beer_;
-import guru.springframework.mssc.beer.service.web.model.BeerStyle;
+import guru.cfg.brewery.model.BeerStyle;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

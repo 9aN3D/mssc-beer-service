@@ -2,7 +2,7 @@ package guru.springframework.mssc.beer.service.web.mapper;
 
 import guru.springframework.mssc.beer.service.domain.Beer;
 import guru.springframework.mssc.beer.service.service.inventory.BeerInventoryService;
-import guru.springframework.mssc.beer.service.web.model.BeerDto;
+import guru.cfg.brewery.model.BeerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

@@ -8,8 +8,8 @@ import guru.springframework.mssc.beer.service.service.inventory.BeerInventorySer
 import guru.springframework.mssc.beer.service.web.mapper.BeerMapperImpl;
 import guru.springframework.mssc.beer.service.web.mapper.BeerMapperImpl_;
 import guru.springframework.mssc.beer.service.web.mapper.DataMapper;
-import guru.springframework.mssc.beer.service.web.model.BeerDto;
-import guru.springframework.mssc.beer.service.web.model.BeerSearchRequest;
+import guru.cfg.brewery.model.BeerDto;
+import guru.cfg.brewery.model.BeerSearchRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-import static guru.springframework.mssc.beer.service.web.model.BeerStyle.PILSNER;
+import static guru.cfg.brewery.model.BeerStyle.PILSNER;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static org.junit.jupiter.api.Assertions.assertEquals;

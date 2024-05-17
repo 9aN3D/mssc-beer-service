@@ -1,6 +1,6 @@
 package guru.springframework.mssc.beer.service.events.producers;
 
-import guru.springframework.mssc.common.events.BeerEvent;
+import guru.cfg.brewery.model.events.BeerEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;

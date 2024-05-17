@@ -1,9 +1,9 @@
 package guru.springframework.mssc.beer.service.events.producers;
 
 import guru.springframework.mssc.beer.service.configuration.JmsConfiguration;
-import guru.springframework.mssc.common.events.BrewBeerEvent;
-import guru.springframework.mssc.common.events.NewBeerEvent;
-import guru.springframework.mssc.common.events.BeerEvent;
+import guru.cfg.brewery.model.events.BrewBeerEvent;
+import guru.cfg.brewery.model.events.NewBeerEvent;
+import guru.cfg.brewery.model.events.BeerEvent;
 
 public interface EventProducer {
 

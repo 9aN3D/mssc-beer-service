@@ -2,9 +2,8 @@ package guru.springframework.mssc.beer.service.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import guru.springframework.mssc.beer.service.service.BeerService;
-import guru.springframework.mssc.beer.service.web.controller.BeerController;
-import guru.springframework.mssc.beer.service.web.model.BeerDto;
-import guru.springframework.mssc.beer.service.web.model.BeerPagedList;
+import guru.cfg.brewery.model.BeerDto;
+import guru.cfg.brewery.model.BeerPagedList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +21,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import static guru.springframework.mssc.beer.service.web.model.BeerStyle.PILSNER;
+import static guru.cfg.brewery.model.BeerStyle.PILSNER;
 import static java.lang.Boolean.FALSE;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;

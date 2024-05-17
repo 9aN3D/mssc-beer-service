@@ -1,7 +1,7 @@
 package guru.springframework.mssc.beer.service.events.listeners;
 
 import guru.springframework.mssc.beer.service.configuration.JmsConfiguration;
-import guru.springframework.mssc.common.events.BrewBeerEvent;
+import guru.cfg.brewery.model.events.BrewBeerEvent;
 import guru.springframework.mssc.beer.service.service.BrewBeerHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

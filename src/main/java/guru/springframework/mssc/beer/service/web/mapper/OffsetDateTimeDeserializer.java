@@ -1,4 +1,4 @@
-package guru.springframework.mssc.beer.service.web.model;
+package guru.springframework.mssc.beer.service.web.mapper;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

@@ -1,10 +1,10 @@
 package guru.springframework.mssc.beer.service.web.controller;
 
 import guru.springframework.mssc.beer.service.service.BeerService;
-import guru.springframework.mssc.beer.service.web.model.BeerSearchRequest;
-import guru.springframework.mssc.beer.service.web.model.BeerStyle;
-import guru.springframework.mssc.beer.service.web.model.BeerDto;
-import guru.springframework.mssc.beer.service.web.model.BeerPagedList;
+import guru.cfg.brewery.model.BeerSearchRequest;
+import guru.cfg.brewery.model.BeerStyle;
+import guru.cfg.brewery.model.BeerDto;
+import guru.cfg.brewery.model.BeerPagedList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

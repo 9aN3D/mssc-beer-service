@@ -1,12 +1,12 @@
 package guru.springframework.mssc.beer.service.web.model;
 
-import guru.springframework.mssc.beer.service.web.model.BeerDto;
+import guru.cfg.brewery.model.BeerDto;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-import static guru.springframework.mssc.beer.service.web.model.BeerStyle.ALE;
+import static guru.cfg.brewery.model.BeerStyle.ALE;
 
 public class BaseTest {
 

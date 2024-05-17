@@ -1,4 +1,4 @@
-package guru.springframework.mssc.beer.service.web.model;
+package guru.cfg.brewery.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

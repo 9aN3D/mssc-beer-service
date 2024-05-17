@@ -1,7 +1,7 @@
 package guru.springframework.mssc.beer.service.service;
 
-import guru.springframework.mssc.beer.service.web.model.BeerDto;
-import guru.springframework.mssc.beer.service.web.model.BeerSearchRequest;
+import guru.cfg.brewery.model.BeerDto;
+import guru.cfg.brewery.model.BeerSearchRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -1,6 +1,6 @@
 package guru.springframework.mssc.beer.service.domain;
 
-import guru.springframework.mssc.beer.service.web.model.BeerStyle;
+import guru.cfg.brewery.model.BeerStyle;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
