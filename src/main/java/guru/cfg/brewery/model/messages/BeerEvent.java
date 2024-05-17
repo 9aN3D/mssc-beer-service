@@ -1,4 +1,4 @@
-package guru.cfg.brewery.model.events;
+package guru.cfg.brewery.model.messages;
 
 import guru.cfg.brewery.model.BeerDto;
 import lombok.AllArgsConstructor;
@@ -6,13 +6,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BeerEvent implements Serializable {
+public class BeerEvent implements Message {
 
     private static final long serialVersionUID = 2315887405398232148L;
 
