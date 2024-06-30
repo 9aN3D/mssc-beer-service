@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.util.UUID;
 
 import static org.springframework.http.HttpMethod.GET;
 
+@Profile("!local-discovery")
 @Slf4j
 @Component
 @ConfigurationProperties(prefix = "sfg.brewery", ignoreUnknownFields = false)
@@ -25,6 +27,8 @@ public class RestTemplateBeerInventoryService implements BeerInventoryService {
 
     @Setter
     private String beerInventoryServicePath;
+    @Setter
+    private String beerInventoryServiceHost;
 
     public RestTemplateBeerInventoryService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
@@ -35,7 +39,7 @@ public class RestTemplateBeerInventoryService implements BeerInventoryService {
         log.trace("Getting on hand inventory {beerId: {}}", beerId);
 
         ResponseEntity<List<BeerInventoryDto>> response = restTemplate
-                .exchange(beerInventoryServicePath, GET, null, new ParameterizedTypeReference<>() {
+                .exchange(getUrl(beerInventoryServicePath), GET, null, new ParameterizedTypeReference<>() {
                 }, beerId);
 
         Integer result = Objects.requireNonNull(response.getBody())
@@ -45,6 +49,10 @@ public class RestTemplateBeerInventoryService implements BeerInventoryService {
 
         log.info("Got on hand inventory {beerId: {}, result: {}}", beerId, result);
         return result;
+    }
+
+    private String getUrl(String path) {
+        return beerInventoryServiceHost + path;
     }
 
 }
