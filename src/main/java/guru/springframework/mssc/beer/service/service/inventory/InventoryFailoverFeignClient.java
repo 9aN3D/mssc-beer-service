@@ -10,10 +10,10 @@ import java.util.UUID;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-@FeignClient(name = "beer-inventory-service", url = "${sfg.brewery.beer-inventory-service-host}", fallback = FeignClientInventoryFailoverService.class)
-public interface BeerInventoryServiceFeignClient {
+@FeignClient(name = "inventory-failover")
+public interface InventoryFailoverFeignClient {
 
-    @RequestMapping(method = GET, value = "${sfg.brewery.beer-inventory-service-path}")
+    @RequestMapping(method = GET, value = "/inventory-failover")
     List<BeerInventoryDto> getOnHandInventory(@PathVariable("beerId") UUID beerId);
 
 }
