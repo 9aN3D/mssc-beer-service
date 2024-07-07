@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-class FeignClientInventoryFailoverService implements InventoryFailoverService {
+class FeignClientInventoryFailoverService implements BeerInventoryServiceFeignClient {
 
     private final InventoryFailoverFeignClient inventoryFailoverFeignClient;
 
